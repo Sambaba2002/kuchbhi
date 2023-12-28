@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player PWA</title>
+
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="/manifest.json">
+
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .music-player {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        .controls button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .info {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="music-player">
+        <div class="controls">
+            <button id="play-pause-btn" onclick="togglePlayPause()">Play</button>
+        </div>
+        <div class="info">
+            <p>Now Playing: <span id="song-title">Dumpy Ride</span></p>
+        </div>
+    </div>
+
+    <!-- Use the direct link here -->
+    <audio id="audio-player" src="https://drive.google.com/uc?export=download&id=13axch7GxImfmjczsQvVV5OqYExcyUpHj"></audio>
+
+    <script>
+        // Your JavaScript code here
+        const audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const songTitle = document.getElementById('song-title');
+
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseBtn.textContent = 'Pause';
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.textContent = 'Play';
+            }
+        }
+
+        // Update song title when the audio is loaded
+        audioPlayer.addEventListener('loadedmetadata', function () {
+            songTitle.textContent = 'Dumpy Ride'; // Update with your song title
+        });
+    </script>
+
+    <!-- Manifest JSON -->
+    <script>
+        const manifest = {
+            "name": "Music Player PWA",
+            "short_name": "Music PWA",
+            "description": "A simple music player Progressive Web App.",
+            "start_url": "/",
+            "display": "standalone",
+            "background_color": "#f4f4f4",
+            "theme_color": "#333",
+            "icons": [
+                {
+                    "src": "/icon.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        };
+
+        // Inject the manifest into the document
+        const manifestTag = document.createElement('script');
+        manifestTag.type = 'application/manifest+json';
+        manifestTag.innerHTML = JSON.stringify(manifest);
+        document.head.appendChild(manifestTag);
+    </script>
+</body>
+</html>
